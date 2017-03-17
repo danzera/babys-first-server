@@ -15,29 +15,36 @@ $(document).ready(function() {
     // !!!---!!!---!!!---TEST---!!!---!!!---!!!
     // log the object to the console
     console.log(car);
-    // add AJAX call and send over car object to the server
-    // console.log('cars submit AJAX post request to the server a success - huzzah!');
+    // AJAX call to send user's input of new car object over to the server
+    $.ajax({
+      type: 'POST', // request type
+      url: '/cars', // route
+      data: car,
+      success: function(res) {
+        console.log('/cars POST request to the server successful - huzzah!');
+      }
+    }); // END AJAX '/cars' 'POST' request
 
-    // add AJAX call to get cars[] array from the server
+    // AJAX call to get cars[] array from the server
     $.ajax({
       type: 'GET', // requst type
       url: '/cars', // route
-      success: function(data) {
+      success: function(res) { // res === cars[] array from server
         // if successful, log the data to the console
-        console.log('AJAX get /cars request a success: ', data);
+        console.log('AJAX get /cars request a success: ', res);
         // empty the table that holds our cars data on the DOM
         $('#carsTable').empty();
         // create the table header
         $('#carsTable').append('<thead><tr><th>MAKE</th><th>MODEL</th></tr></thead><tbody></tbody>');
         // loop through the cars[] array that was returned by the server
-        for (var i = 0; i < data.length; i++) {
+        for (var i = 0; i < res.length; i++) {
           // append the data to the body of the table to display on the DOM
           // last chiled of the carsTable is <tbody>
           var $parent = $('#carsTable').children().last();
           // append elements of the cars[] array to the table body
-          $parent.append('<tr><td>' + data[i].make + '</td><td>' + data[i].model + '</td></tr>');
+          $parent.append('<tr><td>' + res[i].make + '</td><td>' + res[i].model + '</td></tr>');
         } // END for-loop through the cars[] array
       } // END success function()
-    }); // END AJAX 'GET' request
+    }); // END AJAX '/cars' 'GET' request
   }); // END cars-onSubmit event handler
 }); // END of document.ready

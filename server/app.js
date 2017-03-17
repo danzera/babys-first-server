@@ -29,17 +29,26 @@ app.use(express.static('server/public', {
 // RABBIT HOLE (careful, Alice): http://stackoverflow.com/questions/39870867/what-does-app-usebodyparser-json-do
 app.use(bodyParser.urlencoded({extended: true}));
 
-// what to do for a 'GET' /cars request by the client?
+// what to do for a 'GET' '/cars' request by the client?
+// send back current cars stored on the server
 app.get('/cars', function(req, res) {
   // log msg to the server console
-  console.log('/cars get request by client - sending back: ', cars);
+  console.log('/cars GET request by client - sending back: ', cars);
   // send cars[] array back to the client
   res.send(cars);
-});
-// add 'POST' request to handle reception of new car objects
-// app.post()
-// push our car object into the cars array
-// cars.push(car);
+}); // END '/cars' 'GET' request
+
+// what to do for a 'POST' '/cars' request by the client?
+// handle reception of new car objects
+app.post('/cars', function(req, res) {
+  // push our new car object to the cars[] array
+  var newCar = req.body; // Thanks, body-parser!
+  cars.push(newCar); // now do the push
+  // log msg to the server console
+  console.log('/cars POST request by client, new cars array: ', cars);
+  // send back success code to the client
+  res.send(200);
+}); // END '/cars' 'POST' request
 
 // tell the server to listen on the port we specified (5000, in this case)
 app.listen(port);
