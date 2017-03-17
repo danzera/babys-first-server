@@ -1,3 +1,11 @@
+// ************ in package.json file ************
+// **** under "test" inside "scripts" object ****
+// ***** add "start": "node server/app.js" ******
+// this allows us to turn on the server with the command 'npm start'
+// on the command line as opposed to the command 'node server/app.js'
+// this is both a convenience when running the server locally AND
+// it's something many (most/all?) hosting platforms require
+
 // import express
 var express = require('express');
 // unpack express (I think)
@@ -6,7 +14,7 @@ var app = express();
 var port = 5000;
 // global variable cars[] to store user input
 // data will be coming over from client side form
-var cars = [{make: 'Kia', model: 'Seoul'}];
+var cars = [{make: 'Kia', model: 'Seoul'}, {make: 'Geo', model: 'Tracker'}, {make: 'GMC', model: 'Delorean'}];
 
 // specify a default file to serve up
 // all static files are located in the public folder
@@ -24,12 +32,11 @@ app.get('/cars', function(req, res) {
 });
 // add 'POST' request to handle reception of new car objects
 // app.post()
+// push our car object into the cars array
+// cars.push(car);
 
 // tell the server to listen on the port we specified (5000, in this case)
 app.listen(port);
-// ************ in package.json file ************
-// **** under "test" inside "scripts" object ****
-// ***** add "start": "node server/app.js" ******
 // add console.log below, then...
 // !!!---!!!---!!!---TEST---!!!---!!!---!!!
 // log to the server that we're totes listening
