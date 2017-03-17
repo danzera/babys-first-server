@@ -16,5 +16,16 @@
   </head>
   <body>
     <h1>Express Server Spin-Up</h1>
+    <!-- create a form for adding cars to our server -->
+    <form class="userInput" action="index.html" method="post">
+      Make: <input type="text" id="make" name="make" value=""><br><br>
+      Model: <input type="text" id="model" name="model" value=""><br><br>
+      <input type="submit" value="Submit">
+    </form>
+    <!-- div to display user's data as it is added to the server -->
+    <!-- will be dynamically adjusted -->
+    <div id="carsTable">
+
+    </div>
   </body>
 </html>
