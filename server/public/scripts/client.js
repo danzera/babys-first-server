@@ -21,14 +21,7 @@ function addEventListeners() {
     // log the object to the console
     console.log(car);
     // AJAX call to send user's input of new car object over to the server
-    $.ajax({
-      type: 'POST', // request type
-      url: '/cars', // route
-      data: car,
-      success: function() {
-        console.log('/cars POST request to the server successful - huzzah!');
-      }
-    }); // END AJAX '/cars' 'POST' request
+    postNewCar(car);
 
     // AJAX call to get cars[] array from the server
     $.ajax({
@@ -54,7 +47,7 @@ function addEventListeners() {
   }); // END cars-onSubmit event handler
 }
 
-function postNewCar() {
+function postNewCar(car) {
   // AJAX call to send user's input of new car object over to the server
   $.ajax({
     type: 'POST', // request type
