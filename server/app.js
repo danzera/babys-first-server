@@ -10,6 +10,8 @@
 var express = require('express');
 // unpack express (I think)
 var app = express();
+// import body-parser
+var bodyParser = require('body-parser');
 // specify a port that our server will listen on
 var port = 5000;
 // global variable cars[] to store user input
@@ -22,6 +24,10 @@ app.use(express.static('server/public', {
   // a path to the defaul index file is then provided (again, I think)
   index: 'views/index.html'
 }));
+
+// further requirement to use bodyParser
+// RABBIT HOLE (careful, Alice): http://stackoverflow.com/questions/39870867/what-does-app-usebodyparser-json-do
+app.use(bodyParser.urlencoded({extended: true}));
 
 // what to do for a 'GET' /cars request by the client?
 app.get('/cars', function(req, res) {
