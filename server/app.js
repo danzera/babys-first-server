@@ -47,7 +47,7 @@ app.post('/cars', function(req, res) {
   // log msg to the server console
   console.log('/cars POST request by client, new cars array: ', cars);
   // send back success code to the client
-  res.send(200);
+  res.sendStatus(200);
 }); // END '/cars' 'POST' request
 
 // tell the server to listen on the port we specified (5000, in this case)
