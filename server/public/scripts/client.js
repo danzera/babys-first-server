@@ -22,63 +22,49 @@ function addEventListeners() {
     console.log(car);
     // AJAX call to send user's input of new car object over to the server
     postNewCar(car);
-
-    // AJAX call to get cars[] array from the server
-    $.ajax({
-      type: 'GET', // requst type
-      url: '/cars', // route
-      success: function(res) { // res === cars[] array from server
-        // if successful, log the data to the console
-        console.log('AJAX get /cars request a success: ', res);
-        // empty the table that holds our cars data on the DOM
-        $('#carsTable').empty();
-        // create the table header
-        $('#carsTable').append('<thead><tr><th>MAKE</th><th>MODEL</th></tr></thead><tbody></tbody>');
-        // loop through the cars[] array that was returned by the server
-        for (var i = 0; i < res.length; i++) {
-          // append the data to the body of the table to display on the DOM
-          // last chiled of the carsTable is <tbody>
-          var $parent = $('#carsTable').children().last();
-          // append elements of the cars[] array to the table body
-          $parent.append('<tr><td>' + res[i].make + '</td><td>' + res[i].model + '</td></tr>');
-        } // END for-loop through the cars[] array
-      } // END success function()
-    }); // END AJAX '/cars' 'GET' request
+    // AJAX call to get cars[] array from the server and post them to the DOM
+    getCars();
   }); // END cars-onSubmit event handler
 }
 
+// AJAX call to send user's input of new car object over to the server
 function postNewCar(car) {
-  // AJAX call to send user's input of new car object over to the server
   $.ajax({
     type: 'POST', // request type
     url: '/cars', // route
-    data: car,
-    success: function() {
+    data: car, // data being sent to the server
+    success: function() { // if server tells us we succeeded
       console.log('/cars POST request to the server successful - huzzah!');
     }
   }); // END AJAX '/cars' 'POST' request
 } // END postNewCar() function
 
+// AJAX call to get cars[] array from the server and post them to the DOM
 function getCars() {
-  // AJAX call to get cars[] array from the server
   $.ajax({
     type: 'GET', // requst type
     url: '/cars', // route
     success: function(res) { // res === cars[] array from server
       // if successful, log the data to the console
       console.log('AJAX get /cars request a success: ', res);
-      // empty the table that holds our cars data on the DOM
-      $('#carsTable').empty();
-      // create the table header
-      $('#carsTable').append('<thead><tr><th>MAKE</th><th>MODEL</th></tr></thead><tbody></tbody>');
-      // loop through the cars[] array that was returned by the server
-      for (var i = 0; i < res.length; i++) {
-        // append the data to the body of the table to display on the DOM
-        // last chiled of the carsTable is <tbody>
-        var $parent = $('#carsTable').children().last();
-        // append elements of the cars[] array to the table body
-        $parent.append('<tr><td>' + res[i].make + '</td><td>' + res[i].model + '</td></tr>');
-      } // END for-loop through the cars[] array
+      // call appendCarsTable() function to append response data to the DOM
+      appendCarsTable(res);
     } // END success function()
   }); // END AJAX '/cars' 'GET' request
-}
+} // END getCars() function
+
+// append array of cars to the #carsTable on the DOM
+function appendCarsTable(carsArray) {
+  // empty the table that holds our cars data on the DOM
+  $('#carsTable').empty();
+  // create the table header
+  $('#carsTable').append('<thead><tr><th>MAKE</th><th>MODEL</th></tr></thead><tbody></tbody>');
+  // loop through the cars[] array that was returned by the server
+  for (var i = 0; i < carsArray.length; i++) {
+    // append the data to the body of the table to display on the DOM
+    // last chiled of the carsTable is <tbody>
+    var $parent = $('#carsTable').children().last();
+    // append elements of the cars[] array to the table body
+    $parent.append('<tr><td>' + carsArray[i].make + '</td><td>' + carsArray[i].model + '</td></tr>');
+  } // END for-loop through the cars[] array
+} // END appendCarsTable() function
